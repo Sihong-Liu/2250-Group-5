@@ -19,7 +19,7 @@ public class ThirdPersonController : MonoBehaviour
     [Tooltip("Speed ​​at which the character moves. It is not affected by gravity or jumping.")]
     public float velocity = 5f;
     [Tooltip("This value is added to the speed value while the character is sprinting.")]
-    public float sprintAdittion = 10f;
+    public float sprintAdittion = 20f;
     [Tooltip("The higher the value, the higher the character will jump.")]
     public float jumpForce = 18f;
     [Tooltip("Stay in the air. The higher the value, the longer the character floats before falling.")]
