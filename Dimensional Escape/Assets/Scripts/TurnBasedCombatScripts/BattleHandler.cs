@@ -1,60 +1,119 @@
 using UnityEngine;
 
+
 public class BattleHandler : MonoBehaviour
 {
     
     [SerializeField] private Transform capsulePrefab;
+    [SerializeField] private UIHandler uiHandler;
 
-    private GameObject playerUnit;
-    private GameObject enemyUnit;
+    //Instances of battle class
+    private CharacterBattle playerCharacterBattle;
+    private CharacterBattle enemyCharacterBattle;
+    
+    private State state;
 
-    private enum BattleState { START, PLAYERTURN, ENEMYTURN, WIN, LOSE }
-    private BattleState state;
 
-    void Start()
+    //States of turn based combat
+    private enum State
     {
-        state = BattleState.START;
-        SetupBattle();
+        WaitingForPlayer,
+        Busy,
+        BattleOver
+    }
+    
+    
+
+    private void Start()
+    {
+       
+        //spawn in method for enemy and player
+        playerCharacterBattle = SpawnCharacter(true);
+        enemyCharacterBattle = SpawnCharacter(false);
+        
+        //Player goes first
+        state = State.WaitingForPlayer;
+        
+        uiHandler.SetPlayerHealth(playerCharacterBattle.GetHealth());
+        uiHandler.SetEnemyHealth(enemyCharacterBattle.GetHealth());
+        uiHandler.SetGameDisplay("Player Turn");
+        uiHandler.SetControlsInfo();
+        
+        
     }
 
-    void SetupBattle()
+    //Spawns in the player character and the enemy
+    //Player on left
+    private CharacterBattle SpawnCharacter(bool isPlayer)
     {
-        // Instantiate player and enemy capsules
-        playerUnit = Instantiate(capsulePrefab, new Vector3(-2, 0, 0), Quaternion.identity).gameObject;
-        enemyUnit = Instantiate(capsulePrefab, new Vector3(2, 0, 0), Quaternion.identity).gameObject;
+        Vector3 position;
 
-        // Name them for clarity
-        playerUnit.name = "Player";
-        enemyUnit.name = "Enemy";
+        if (isPlayer)
+        {
+            position = new Vector3(425f, 10f, 100f);
+        }
+        else
+        {
+            position = new Vector3(575f, 10f, 100f);
+        }
 
-        Debug.Log("Battle Started");
-        state = BattleState.PLAYERTURN;
-        PlayerTurn();
+        Transform characterTransform = Instantiate(capsulePrefab, position, Quaternion.identity);
+        CharacterBattle characterBattle = characterTransform.gameObject.AddComponent<CharacterBattle>();
+        characterBattle.Setup(isPlayer);
+        return characterBattle;
     }
 
-    void PlayerTurn()
+    private void Update()
     {
-        Debug.Log("Player's Turn");
-        // In the next step, we’ll add UI here
-    }
+        if (state != State.WaitingForPlayer) return;
 
-    public void OnAttackButton()
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            state = State.Busy;
+            playerCharacterBattle.Attack(enemyCharacterBattle);
+            uiHandler.SetEnemyHealth(enemyCharacterBattle.GetHealth());
+
+            if (enemyCharacterBattle.IsDead())
+            {
+                uiHandler.SetGameDisplay("You Win!");
+                state = State.BattleOver;
+                return;
+            }
+
+
+            uiHandler.SetGameDisplay("Enemy Turn");
+            Invoke(nameof(EnemyTurn), 1f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            state = State.Busy;
+            playerCharacterBattle.Heal();
+            uiHandler.SetPlayerHealth(playerCharacterBattle.GetHealth());
+
+            uiHandler.SetGameDisplay("Enemy Turn");
+            Invoke(nameof(EnemyTurn), 1f);
+        }
+    }
+    
+    private void EnemyTurn()
     {
-        if (state != BattleState.PLAYERTURN) return;
+        
+        enemyCharacterBattle.Attack(playerCharacterBattle);
+        uiHandler.SetPlayerHealth(playerCharacterBattle.GetHealth());
 
-        Debug.Log("Player attacks!");
-        // Apply fake damage or animation later
+        if (playerCharacterBattle.IsDead())
+        {
+            uiHandler.SetGameDisplay("You Lose!");
+            state = State.BattleOver;
+            return;
+        }
 
-        state = BattleState.ENEMYTURN;
-        Invoke(nameof(EnemyTurn), 2f);
+        uiHandler.SetGameDisplay("Player Turn");
+        state = State.WaitingForPlayer;
     }
-
-    void EnemyTurn()
-    {
-        Debug.Log("Enemy attacks!");
-        // Apply fake damage or animation later
-
-        state = BattleState.PLAYERTURN;
-        PlayerTurn();
-    }
+    
+    
+    
+    
 }
