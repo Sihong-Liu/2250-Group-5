@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4287fee2b25993418a5c1031f525202, type: 3}
+  m_Name: New Character Data Base
+  m_EditorClassIdentifier: 
+  character:
+  - charcaterName: Slimy
+    charcaterSprite: {fileID: 21300000, guid: fc6d57fe0a50cc2408408b7073666b8f, type: 3}
+    charcaterPrefab: {fileID: 3198502390492704377, guid: 0ba0f6eee23032e4e83d421e739dc905, type: 3}
+  - charcaterName: Kingly
+    charcaterSprite: {fileID: 21300000, guid: 9bfa470292c3b874883ada7fa8994e47, type: 3}
+    charcaterPrefab: {fileID: 4281683080859636826, guid: 93df5c48d5e021040916b0e984d9b01a, type: 3}
+  - charcaterName: Chiller
+    charcaterSprite: {fileID: 21300000, guid: bcf3763c72ff90d45b20dec70954d394, type: 3}
+    charcaterPrefab: {fileID: 6173172085731050060, guid: fa12db7f8a3f0714799c08ee4da865d6, type: 3}

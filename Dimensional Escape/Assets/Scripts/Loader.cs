@@ -8,7 +8,8 @@ public static class Loader
    {
       MainMenu,
       Levels,
-      LoadinScene
+      LoadinScene,
+      CharacterSelection
    }
    private static Scene targetScene;
 
