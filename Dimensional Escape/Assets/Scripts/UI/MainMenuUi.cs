@@ -14,12 +14,15 @@ public class MainMenuUi : MonoBehaviour
     {
         playBtn.onClick.AddListener(() =>
         {
-            Loader.Load(Loader.Scene.Levels);
+            Debug.Log("Play button clicked!");
+            Loader.Load(Loader.Scene.CharacterSelection);
             
         });
         quitBtn.onClick.AddListener(() =>
         {
+            Debug.Log("Quit button clicked!");
             Application.Quit();
         });
     }
+    
 }
