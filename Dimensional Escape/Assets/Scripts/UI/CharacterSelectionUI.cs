@@ -1,13 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections;
-using System.Collections.Generic;
 
-public class MainMenuUi : MonoBehaviour
+public class CharacterSelectionUI : MonoBehaviour
 {
     [SerializeField] private Button playBtn;
     [SerializeField] private Button quitBtn;
+   
 
 
     private void Awake()
@@ -15,14 +13,15 @@ public class MainMenuUi : MonoBehaviour
         playBtn.onClick.AddListener(() =>
         {
             Debug.Log("Play button clicked!");
-            Loader.Load(Loader.Scene.CharacterSelection);
+            Loader.Load(Loader.Scene.Levels);
             
         });
         quitBtn.onClick.AddListener(() =>
         {
-            Debug.Log("Quit button clicked!");
-            Application.Quit();
+            Debug.Log("Play button clicked!");
+            Loader.Load(Loader.Scene.MainMenu);
+            
         });
+        
     }
-    
 }
