@@ -5,13 +5,13 @@
  */
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
 
     public int currentScore = 0;
-    public Text scoreText; //@Manas, Assign this in the UI(Canvas) you might want to use this variable, or change it's name to what every you were using.
+    public TextMeshProUGUI scoreText; //@Manas, Assign this in the UI(Canvas) you might want to use this variable, or change it's name to what every you were using.
 
     private void Awake()
     {
