@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class BattleHandler : MonoBehaviour
 {
-    
-    [SerializeField] private Transform capsulePrefab;
+
+    [SerializeField] private Transform enemyPrefab;
+    [SerializeField] private Transform capsulePrefab2;
     [SerializeField] private UIHandler uiHandler;
 
     //Instances of battle class
@@ -29,7 +31,7 @@ public class BattleHandler : MonoBehaviour
        
         //spawn in method for enemy and player
         playerCharacterBattle = SpawnCharacter(true);
-        enemyCharacterBattle = SpawnCharacter(false);
+        enemyCharacterBattle = SpawnCharacter2(false);
         
         //Player goes first
         state = State.WaitingForPlayer;
@@ -57,7 +59,26 @@ public class BattleHandler : MonoBehaviour
             position = new Vector3(575f, 10f, 100f);
         }
 
-        Transform characterTransform = Instantiate(capsulePrefab, position, Quaternion.identity);
+        Transform characterTransform = Instantiate(capsulePrefab2, position, Quaternion.identity);
+        CharacterBattle characterBattle = characterTransform.gameObject.AddComponent<CharacterBattle>();
+        characterBattle.Setup(isPlayer);
+        return characterBattle;
+    }
+    
+    private CharacterBattle SpawnCharacter2(bool isPlayer)
+    {
+        Vector3 position;
+
+        if (isPlayer)
+        {
+            position = new Vector3(425f, 10f, 100f);
+        }
+        else
+        {
+            position = new Vector3(575f, 10f, 100f);
+        }
+
+        Transform characterTransform = Instantiate(enemyPrefab, position, Quaternion.identity);
         CharacterBattle characterBattle = characterTransform.gameObject.AddComponent<CharacterBattle>();
         characterBattle.Setup(isPlayer);
         return characterBattle;
@@ -77,9 +98,9 @@ public class BattleHandler : MonoBehaviour
             {
                 uiHandler.SetGameDisplay("You Win!");
                 state = State.BattleOver;
+                Invoke(nameof(returnLevel),2f);
                 return;
             }
-
 
             uiHandler.SetGameDisplay("Enemy Turn");
             Invoke(nameof(EnemyTurn), 1f);
@@ -94,6 +115,8 @@ public class BattleHandler : MonoBehaviour
             uiHandler.SetGameDisplay("Enemy Turn");
             Invoke(nameof(EnemyTurn), 1f);
         }
+        
+        
     }
     
     private void EnemyTurn()
@@ -106,14 +129,20 @@ public class BattleHandler : MonoBehaviour
         {
             uiHandler.SetGameDisplay("You Lose!");
             state = State.BattleOver;
+            Invoke(nameof(returnLevel),2f);
             return;
         }
 
         uiHandler.SetGameDisplay("Player Turn");
         state = State.WaitingForPlayer;
     }
-    
-    
-    
-    
+
+    private void returnLevel()
+    {
+        SceneManager.LoadScene("Levels");
+    }
+
+
+
+
 }

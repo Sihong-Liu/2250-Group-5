@@ -7,7 +7,17 @@ public class NPCScripts : MonoBehaviour
     public TextMeshPro interactionText; // Assign in Inspector
     public Transform npcHead; // Assign NPC's Transform (or head position)
     public Transform player; // Assign Player's Transform
-    bool playerDetected = false;
+
+    private bool playerDetected = false;
+    private int currentDialogueIndex = 0;
+
+    private string[] dialogueLines = new string[]
+    {
+        "Welcome to Dimensional Escape",
+        "You are trapped in the matrix of the game AI, you have to escape",
+        "Win battles, collect gems, and do quests to earn points",
+        "You need 100 points to move on to the next level"
+    };
 
     void Update()
     {
@@ -22,14 +32,17 @@ public class NPCScripts : MonoBehaviour
             if (interactionText != null)
             {
                 interactionText.transform.LookAt(Camera.main.transform);
-                // Flip it back to fix mirrored issue
-                interactionText.transform.Rotate(0, 180, 0);
+                interactionText.transform.Rotate(0, 180, 0); // Fix mirrored issue
             }
 
             // Check if the player presses F
             if (Input.GetKeyDown(KeyCode.F))
             {
-                Debug.Log("✅ The dialogue has started");
+                if (currentDialogueIndex < dialogueLines.Length)
+                {
+                    interactionText.text = dialogueLines[currentDialogueIndex];
+                    currentDialogueIndex++;
+                }
             }
         }
     }
@@ -42,6 +55,11 @@ public class NPCScripts : MonoBehaviour
         {
             interactionText.gameObject.SetActive(detected);
             interactionText.ForceMeshUpdate(); // Force update in case of rendering issues
+        }
+
+        if (!detected)
+        {
+            currentDialogueIndex = 0; // Reset dialogue if player leaves
         }
 
         Debug.Log(detected ? "✅ Player entered trigger zone" : "❌ Player left trigger zone");
