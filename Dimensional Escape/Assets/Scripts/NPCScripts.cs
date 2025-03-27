@@ -13,7 +13,7 @@ public class NPCScripts : MonoBehaviour
 
     private string[] dialogueLines = new string[]
     {
-        "Welcome to Dimensional Escape",
+        "Welcome to Dimensional Escape. Press F to Continue through prompts",
         "You are trapped in the matrix of the game AI, you have to escape",
         "Win battles, collect gems, and do quests to earn points",
         "You need 100 points to move on to the next level"
