@@ -96,6 +96,8 @@ public class BattleHandler : MonoBehaviour
 
             if (enemyCharacterBattle.IsDead())
             {
+                
+                ScoreManager.Instance.AddScore(50);
                 uiHandler.SetGameDisplay("You Win!");
                 state = State.BattleOver;
                 Invoke(nameof(returnLevel),2f);
