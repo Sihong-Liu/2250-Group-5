@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Collectable : MonoBehaviour
+public class Collectable : MonoBehaviour//this monobehaviour script works as a component of Gem or other collectables in map.
 {
     public int scoreValue = 10; //gem's score value
 
