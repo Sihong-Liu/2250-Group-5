@@ -19,6 +19,7 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -34,7 +35,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int amount)
     {
         currentScore += amount;
-        UpdateScoreUI();
+        Invoke(nameof(UpdateScoreUI), 2f);
     }
 
     public void ResetScore()
