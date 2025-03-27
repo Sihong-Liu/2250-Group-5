@@ -285,7 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4d1783cf252a145ae06baf6c5b2178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capsulePrefab: {fileID: 2570025425947983097, guid: 6ea2c8737c18cef4eb2ab3c1ff67d77c, type: 3}
+  enemyPrefab: {fileID: 400048, guid: 272ec112bddec644a8af6599107e74f7, type: 3}
+  capsulePrefab2: {fileID: 2570025425947983097, guid: 6ea2c8737c18cef4eb2ab3c1ff67d77c, type: 3}
   uiHandler: {fileID: 55942384}
 --- !u!1 &285930442
 GameObject:
