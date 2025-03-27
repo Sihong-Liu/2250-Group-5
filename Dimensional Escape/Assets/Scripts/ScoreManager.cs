@@ -6,6 +6,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
@@ -35,7 +36,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int amount)
     {
         currentScore += amount;
-        Invoke(nameof(UpdateScoreUI), 2f);
+        Invoke(nameof(UpdateScoreUI), 0.5f);
     }
 
     public void ResetScore()
@@ -48,7 +49,25 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + currentScore.ToString();
+            scoreText.text = "Score: " + currentScore;
         }
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Re-assign the scoreText by finding it in the new scene
+        scoreText = GameObject.Find("ScoreText")?.GetComponent<TextMeshProUGUI>();
+        UpdateScoreUI(); // Refresh UI
+    }
+    
 }
