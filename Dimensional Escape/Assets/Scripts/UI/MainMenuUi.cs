@@ -20,7 +20,7 @@ public class MainMenuUi : MonoBehaviour
         });
         quitBtn.onClick.AddListener(() =>
         {
-            Debug.Log("Quit button clicked!");
+            Debug.Log("Quitting game...");
             Application.Quit();
         });
     }
