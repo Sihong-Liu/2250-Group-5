@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public CharacterDataBase characterDB;
 
-    public Image artworkSprite;
+    public GameObject playerPrefab;
 
     private int selectedOption = 0;
 
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
     private void UpdateCharacter(int selectedOption)
     {
         Character character = characterDB.GetCharacter(selectedOption);
-        artworkSprite.sprite = character.charcaterSprite;
+        playerPrefab = character.charcaterPrefab;
        
     }
 

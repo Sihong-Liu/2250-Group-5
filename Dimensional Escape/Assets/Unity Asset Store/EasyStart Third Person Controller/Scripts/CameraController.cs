@@ -72,4 +72,10 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Euler(-mouseY, mouseX, 0);
 
     }
+    public void SetPlayer(Transform playerTransform)
+    {
+        player = playerTransform;
+        offsetDistanceY = transform.position.y;
+        Debug.Log("Player manually set in camera controller");
+    }
 }
